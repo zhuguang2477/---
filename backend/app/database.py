@@ -3,18 +3,18 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from backend.app.core.config import settings
 
-# SQLAlchemy 引擎配置 - 使用新的 DATABASE_URL 属性
+# Настройка двигателя SQLALCHEMY - Используйте новый атрибут DATABASE URL
 engine = create_engine(
     settings.DATABASE_URL,
     pool_size=10,
     max_overflow=20,
-    pool_pre_ping=True  # 连接健康检查
+    pool_pre_ping=True  # Подключение к медицинскому обследованию
 )
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
-# 数据库会话依赖注入
+# Сеанс базы данных зависит от инъекции
 def get_db():
     db = SessionLocal()
     try:

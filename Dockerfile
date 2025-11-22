@@ -2,17 +2,17 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-# 复制依赖文件
+# Копирование зависимых файлов
 COPY requirements.txt .
 
-# 安装依赖
+# Зависимость от установки
 RUN pip install --no-cache-dir -r requirements.txt
 
-# 复制应用代码
+# Копировать код приложения
 COPY . .
 
-# 暴露端口
+# Открытый порт
 EXPOSE 8000
 
-# 启动命令
+# Запустить команду
 CMD ["uvicorn", "backend.app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]

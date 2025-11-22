@@ -3,7 +3,7 @@ from typing import Literal, Optional
 
 
 class HealthCheckResponse(BaseModel):
-    """健康检查响应模型"""
+    """Модель реагирования на медицинские обследования"""
     status: Literal["healthy", "unhealthy"]
     database: Optional[Literal["healthy", "unhealthy"]] = None
     redis: Optional[Literal["healthy", "unhealthy"]] = None
@@ -23,7 +23,7 @@ class HealthCheckResponse(BaseModel):
 
 
 class DatabaseHealthResponse(BaseModel):
-    """数据库健康检查响应模型"""
+    """Модель реагирования на медицинские обследования базы данных"""
     database: str = "PostgreSQL"
     status: Literal["connected", "disconnected"]
 
@@ -37,7 +37,7 @@ class DatabaseHealthResponse(BaseModel):
 
 
 class RedisHealthResponse(BaseModel):
-    """Redis健康检查响应模型"""
+    """Модель ответов на медицинские обследования Redis"""
     redis: str = "Redis"
     status: Literal["connected", "disconnected"]
 

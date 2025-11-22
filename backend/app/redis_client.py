@@ -1,12 +1,12 @@
 import redis
 from backend.app.core.config import settings
 
-# Redis 客户端实例 - 使用新的 REDIS_URL 属性
+# Пример клиента Redis - Используйте новый атрибут REDIS URL
 redis_client = redis.Redis.from_url(
     settings.REDIS_URL,
-    decode_responses=True,  # 自动解码响应
-    socket_connect_timeout=5,  # 连接超时
-    socket_keepalive=True  # 保持连接
+    decode_responses=True,  # Автодекодирование ответов
+    socket_connect_timeout=5,  # Время ожидания соединения
+    socket_keepalive=True  # Подключиться
 )
 
 def get_redis():

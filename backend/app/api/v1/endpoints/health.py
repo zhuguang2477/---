@@ -20,7 +20,7 @@ router = APIRouter()
 def check_database_health(db: Session) -> bool:
     """检查数据库连接状态"""
     try:
-        # 执行简单的查询来测试数据库连接
+        # Выполнить простой запрос для проверки подключения к базе данных
         db.execute(text("SELECT 1"))
         return True
     except Exception as e:
@@ -29,7 +29,7 @@ def check_database_health(db: Session) -> bool:
 
 
 def check_redis_health(redis_client: redis.Redis) -> bool:
-    """检查 Redis 连接状态"""
+    """Проверьте состояние соединения Redis"""
     try:
         return redis_client.ping()
     except Exception as e:
@@ -40,24 +40,24 @@ def check_redis_health(redis_client: redis.Redis) -> bool:
 @router.get(
     "/health",
     response_model=HealthCheckResponse,
-    summary="应用健康状态检查",
-    description="检查应用、数据库和 Redis 的连接状态"
+    summary="Применение проверки состояния здоровья",
+    description="Проверка состояния подключения приложений, баз данных и Redis"
 )
 async def health_check(
     db: Session = Depends(get_db),
     redis_client: redis.Redis = Depends(get_redis)
 ):
-    """综合健康检查端点"""
-    # 检查数据库连接
+    """Комплексный медицинский осмотр"""
+    # Проверка подключения к базе данных
     db_healthy = check_database_health(db)
     
-    # 检查 Redis 连接
+    # Проверьте соединение Redis
     redis_healthy = check_redis_health(redis_client)
     
-    # 确定整体状态
+    # Определение общего состояния
     overall_status = "healthy" if (db_healthy and redis_healthy) else "unhealthy"
     
-    # 获取当前时间戳
+    # Получение текущей метки времени
     current_time = datetime.now(pytz.utc).isoformat()
     
     return HealthCheckResponse(
@@ -72,11 +72,11 @@ async def health_check(
 @router.get(
     "/health/database",
     response_model=DatabaseHealthResponse,
-    summary="数据库健康检查",
-    description="单独检查数据库连接状态"
+    summary="База данных медицинский осмотр",
+    description="Проверьте состояние подключения к базе данных отдельно"
 )
 async def database_health_check(db: Session = Depends(get_db)):
-    """数据库健康检查端点"""
+    """База данных для проверки здоровья"""
     is_healthy = check_database_health(db)
     
     return DatabaseHealthResponse(
@@ -87,11 +87,11 @@ async def database_health_check(db: Session = Depends(get_db)):
 @router.get(
     "/health/redis", 
     response_model=RedisHealthResponse,
-    summary="Redis 健康检查",
-    description="单独检查 Redis 连接状态"
+    summary="Redis Медицинский осмотр",
+    description="Проверьте состояние соединения Redis."
 )
 async def redis_health_check(redis_client: redis.Redis = Depends(get_redis)):
-    """Redis 健康检查端点"""
+    """Проверка здоровья Redis"""
     is_healthy = check_redis_health(redis_client)
     
     return RedisHealthResponse(

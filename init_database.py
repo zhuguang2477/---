@@ -3,18 +3,18 @@ from backend.app.models.base import Base
 
 def init_db():
     try:
-        # 创建所有表
+        # Создать все таблицы
         Base.metadata.create_all(bind=engine)
-        print("✅ 数据库表创建成功!")
+        print("✅ Таблица базы данных создана успешно!")
         
-        # 检查创建的表
+        # Проверить созданные таблицы
         from sqlalchemy import inspect
         inspector = inspect(engine)
         tables = inspector.get_table_names()
-        print(f"创建的表: {tables}")
+        print(f"Создать таблицу: {tables}")
         
     except Exception as e:
-        print(f"❌ 数据库表创建失败: {e}")
+        print(f"❌ Ошибка создания таблицы базы данных: {e}")
 
 if __name__ == "__main__":
     init_db()

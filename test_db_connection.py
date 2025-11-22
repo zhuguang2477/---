@@ -4,27 +4,27 @@ from backend.app.core.config import settings
 
 def test_connection():
     try:
-        print(f"尝试连接数据库: {settings.DATABASE_URL}")
+        print(f"Попытка подключения к базе данных: {settings.DATABASE_URL}")
         
-        # 创建引擎
+        # Создать движок
         engine = create_engine(settings.DATABASE_URL)
         
-        # 测试连接
+        # Проверить соединение
         with engine.connect() as conn:
             result = conn.execute(text("SELECT version()"))
             version = result.scalar()
-            print(f"✅ PostgreSQL 连接成功!")
-            print(f"PostgreSQL 版本: {version}")
+            print(f"✅ Успешное подключение PostgreSQL!")
+            print(f"Версия PostgreSQL: {version}")
             
-            # 测试数据库列表
+            # Список тестовых баз данных
             result = conn.execute(text("SELECT datname FROM pg_database WHERE datistemplate = false;"))
             databases = [row[0] for row in result]
-            print(f"可用数据库: {databases}")
+            print(f"Доступные базы данных: {databases}")
             
             return True
             
     except Exception as e:
-        print(f"❌ 数据库连接失败: {e}")
+        print(f"❌ Ошибка подключения к базе данных: {e}")
         return False
 
 if __name__ == "__main__":
